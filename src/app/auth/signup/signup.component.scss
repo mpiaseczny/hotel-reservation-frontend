@@ -1,0 +1,50 @@
+p-card {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 30%;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
+
+  span {
+    margin: 25px auto;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding-left: 0;
+  }
+
+  button {
+    margin-bottom: 20px;
+    width: 30%;
+  }
+}
+
+:host ::ng-deep {
+  .p-card {
+    width: 100%;
+    min-width: 500px;
+
+    .p-card-title {
+      text-align: center;
+    }
+
+    .p-card-body {
+      padding: 2rem 3rem;
+    }
+  }
+
+  .p-password {
+    &, input {
+      width: 100%;
+    }
+  }
+}

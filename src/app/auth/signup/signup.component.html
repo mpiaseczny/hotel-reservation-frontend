@@ -1,0 +1,25 @@
+<form ngForm #form="ngForm">
+  <p-card>
+    <ng-template pTemplate="title">
+      Zarejestruj się i utwórz konto
+    </ng-template>
+    <span class="p-float-label">
+      <input required email id="email-input" name="email" type="email" pInputText [(ngModel)]="userDetails.email">
+      <label for="email-input">Email</label>
+    </span>
+    <span class="p-float-label">
+      <input required id="name-input" name="name" type="text" pInputText [(ngModel)]="userDetails.name">
+      <label for="name-input">Imię i Nazwisko</label>
+    </span>
+    <span class="p-float-label">
+      <p-password required id="password-input" name="password" [toggleMask]="true" [(ngModel)]="userDetails.password"></p-password>
+      <label for="password-input">Hasło</label>
+    </span>
+    <ng-template pTemplate="footer">
+      <div class="card-footer">
+        <button pButton type="submit" label="Zarejestruj" (click)="onSignUp()"></button>
+        <a routerLink="../login">Logowanie</a>
+      </div>
+    </ng-template>
+  </p-card>
+</form>
