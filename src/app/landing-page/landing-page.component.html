@@ -1,0 +1,222 @@
+<section
+  class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start"
+>
+  <div class="container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+      <div>
+        <h1>Zarezerwuj pobyt w hotelu</h1>
+        <p class="lead my-4">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
+          nisi quae tempore vero! Quam, rem!
+        </p>
+      </div>
+      <img
+        class="img-fluid w-50 d-none d-sm-block"
+        src="assets/hotel-icon.png"
+        alt=""
+      />
+    </div>
+  </div>
+</section>
+
+<section class="bg-primary text-light p-5">
+  <div class="container">
+    <div class="row">
+      <h3 class="mb-3 mb-lg-0 col-lg-4 d-flex align-items-center">
+        Sprawdź dostępność
+      </h3>
+
+      <div class="hotel-search-input col-lg-8" ngForm #roomSearchForm="ngForm">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
+            <p-calendar
+              required
+              name="date-from"
+              [showIcon]="true"
+              [readonlyInput]="true"
+              [(ngModel)]="dateFrom"
+              (ngModelChange)="onDateFromChange($event)"
+              placeholder="Od kiedy"
+            ></p-calendar>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
+            <p-calendar
+              required
+              name="date-to"
+              [(ngModel)]="dateTo"
+              (ngModelChange)="onDateToChange($event)"
+              [showIcon]="true"
+              [readonlyInput]="true"
+              placeholder="Do kiedy"
+            ></p-calendar>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
+            <p-dropdown required name="people" placeholder="Osoby" [options]="roomSizeOptions" [(ngModel)]="roomSearchRequest.people"></p-dropdown>
+          </div>
+          <div class="col-md-8 col-sm-8 col-xs-6 col-pad-3">
+            <input
+              required
+              [(ngModel)]="roomSearchRequest.city"
+              name="city"
+              type="text"
+              pInputText
+              placeholder="Miasto"
+            />
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3">
+            <button class="btn btn-dark btn-lg" type="button" (click)="searchRoom()">Szukaj</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="freq-questions" class="p-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Najczęściej zadawane pytania</h2>
+    <div class="accordion accordion-flush" id="questions">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#question-one"
+          >
+            Jakie są formy płatności?
+          </button>
+        </h2>
+        <div
+          id="question-one"
+          class="accordion-collapse collapse"
+          data-bs-parent="#questions"
+        >
+          <div class="accordion-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            beatae fuga animi distinctio perspiciatis adipisci velit maiores
+            totam tempora accusamus modi explicabo accusantium consequatur,
+            praesentium rem quisquam molestias at quos vero. Officiis ad
+            velit doloremque at. Dignissimos praesentium necessitatibus
+            natus corrupti cum consequatur aliquam! Minima molestias iure
+            quam distinctio velit.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#question-two"
+          >
+            Jakie są wasze zasady dotyczące anulowania?
+          </button>
+        </h2>
+        <div
+          id="question-two"
+          class="accordion-collapse collapse"
+          data-bs-parent="#questions"
+        >
+          <div class="accordion-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            beatae fuga animi distinctio perspiciatis adipisci velit maiores
+            totam tempora accusamus modi explicabo accusantium consequatur,
+            praesentium rem quisquam molestias at quos vero. Officiis ad
+            velit doloremque at. Dignissimos praesentium necessitatibus
+            natus corrupti cum consequatur aliquam! Minima molestias iure
+            quam distinctio velit.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#question-three"
+          >
+            Jaki jest najlepszy sposób na znalezienie informacji, których potrzebuję?
+          </button>
+        </h2>
+        <div
+          id="question-three"
+          class="accordion-collapse collapse"
+          data-bs-parent="#questions"
+        >
+          <div class="accordion-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            beatae fuga animi distinctio perspiciatis adipisci velit maiores
+            totam tempora accusamus modi explicabo accusantium consequatur,
+            praesentium rem quisquam molestias at quos vero. Officiis ad
+            velit doloremque at. Dignissimos praesentium necessitatibus
+            natus corrupti cum consequatur aliquam! Minima molestias iure
+            quam distinctio velit.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#question-four"
+          >
+            Czy mogę zarezerwować online więcej niż jeden pokój jednocześnie?
+          </button>
+        </h2>
+        <div
+          id="question-four"
+          class="accordion-collapse collapse"
+          data-bs-parent="#questions"
+        >
+          <div class="accordion-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            beatae fuga animi distinctio perspiciatis adipisci velit maiores
+            totam tempora accusamus modi explicabo accusantium consequatur,
+            praesentium rem quisquam molestias at quos vero. Officiis ad
+            velit doloremque at. Dignissimos praesentium necessitatibus
+            natus corrupti cum consequatur aliquam! Minima molestias iure
+            quam distinctio velit.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#question-five"
+          >
+            Czy mogę anulować lub zmienić rezerwację po jej dokonaniu?
+          </button>
+        </h2>
+        <div
+          id="question-five"
+          class="accordion-collapse collapse"
+          data-bs-parent="#questions"
+        >
+          <div class="accordion-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            beatae fuga animi distinctio perspiciatis adipisci velit maiores
+            totam tempora accusamus modi explicabo accusantium consequatur,
+            praesentium rem quisquam molestias at quos vero. Officiis ad
+            velit doloremque at. Dignissimos praesentium necessitatibus
+            natus corrupti cum consequatur aliquam! Minima molestias iure
+            quam distinctio velit.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="p-5 bg-dark text-white text-center position-relative">
+  <div class="container">
+    <p class="lead">Copyright &copy; 2021 Michał Piaseczny</p>
+  </div>
+</footer>

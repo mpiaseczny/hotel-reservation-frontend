@@ -1,0 +1,15 @@
+:host ::ng-deep {
+  input, .p-calendar, .p-dropdown, .btn {
+    width: 100%;
+  }
+
+  .btn-lg {
+    height: 42px;
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+.col-pad-3 {
+  padding: 0 7.5px;
+}
+

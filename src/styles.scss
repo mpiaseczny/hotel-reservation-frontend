@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+body::before {
+  display: block;
+  content: '';
+  height: 72px;
+}
+
+@mixin input-red-border {
+  margin: -1px;
+  border: 1px solid red !important;
+  border-radius: 3px;
+}
+
+input.ng-touched.ng-invalid {
+  @include input-red-border;
+}
+
+.ng-touched.ng-invalid:not([ngform]) {
+  .p-dropdown, .p-calendar {
+    @include input-red-border;
+  }
+}

@@ -17,9 +17,13 @@ import { ToastModule } from 'primeng/toast';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MessageService } from 'primeng/api';
 import {PasswordModule} from 'primeng/password';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import {CalendarModule} from 'primeng/calendar';
+import {DropdownModule} from 'primeng/dropdown';
+import { HotelsComponent } from './hotels/hotels.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, LandingPageComponent, HotelsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,6 +37,8 @@ import {PasswordModule} from 'primeng/password';
     HttpClientModule,
     ToastModule,
     PasswordModule,
+    CalendarModule,
+    DropdownModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
