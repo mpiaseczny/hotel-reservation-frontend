@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import {RoomSearchRequest} from '../shared/model/room-search-request';
 
 @Component({
   selector: 'app-landing-page',
@@ -62,9 +63,3 @@ export class LandingPageComponent implements OnInit {
   }
 }
 
-export interface RoomSearchRequest {
-  city?: string;
-  dateFrom?: number;
-  dateTo?: number;
-  people?: number;
-}

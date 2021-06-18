@@ -12,18 +12,25 @@ import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MessageService } from 'primeng/api';
-import {PasswordModule} from 'primeng/password';
+import { PasswordModule } from 'primeng/password';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import {CalendarModule} from 'primeng/calendar';
-import {DropdownModule} from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 import { HotelsComponent } from './hotels/hotels.component';
+import {TokenInterceptor} from './auth/shared/token.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, LandingPageComponent, HotelsComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignupComponent,
+    LandingPageComponent,
+    HotelsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +47,14 @@ import { HotelsComponent } from './hotels/hotels.component';
     CalendarModule,
     DropdownModule,
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
