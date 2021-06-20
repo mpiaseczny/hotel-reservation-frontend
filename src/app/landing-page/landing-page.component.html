@@ -30,7 +30,6 @@
         <div class="row">
           <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
             <p-calendar
-              required
               name="date-from"
               [showIcon]="true"
               [readonlyInput]="true"
@@ -41,7 +40,6 @@
           </div>
           <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
             <p-calendar
-              required
               name="date-to"
               [(ngModel)]="dateTo"
               (ngModelChange)="onDateToChange($event)"
@@ -51,7 +49,7 @@
             ></p-calendar>
           </div>
           <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
-            <p-dropdown required name="people" placeholder="Osoby" [options]="roomSizeOptions" [(ngModel)]="roomSearchRequest.people"></p-dropdown>
+            <p-dropdown name="people" placeholder="Osoby" [options]="roomSizeOptions" [(ngModel)]="roomSearchRequest.people"></p-dropdown>
           </div>
           <div class="col-md-8 col-sm-8 col-xs-6 col-pad-3">
             <input
@@ -60,7 +58,7 @@
               name="city"
               type="text"
               pInputText
-              placeholder="Miasto"
+              placeholder="Nazwa pokoju lub miasto"
             />
           </div>
           <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3">

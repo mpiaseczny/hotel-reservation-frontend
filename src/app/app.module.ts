@@ -12,16 +12,24 @@ import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { SignupComponent } from './auth/signup/signup.component';
-import { MessageService } from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { PasswordModule } from 'primeng/password';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
-import { HotelsComponent } from './hotels/hotels.component';
-import {TokenInterceptor} from './auth/shared/token.interceptor';
+import { HotelSearchComponent } from './hotels/hotel-search/hotel-search.component';
+import { TokenInterceptor } from './auth/shared/token.interceptor';
+import { RoomSearchComponent } from './room-search/room-search.component';
+import { EnableForRoleDirective } from './auth/shared/enable-for-role.directive';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { CommonModule } from '@angular/common';
+import { AddNewHotelComponent } from './hotels/add-new-hotel/add-new-hotel.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import {RatingModule} from 'primeng/rating';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -29,7 +37,10 @@ import {TokenInterceptor} from './auth/shared/token.interceptor';
     LoginComponent,
     SignupComponent,
     LandingPageComponent,
-    HotelsComponent,
+    HotelSearchComponent,
+    RoomSearchComponent,
+    EnableForRoleDirective,
+    AddNewHotelComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +48,7 @@ import {TokenInterceptor} from './auth/shared/token.interceptor';
     BrowserAnimationsModule,
     NgxWebstorageModule.forRoot(),
     NgxBootstrapIconsModule.pick(allIcons),
+    CommonModule,
     CardModule,
     FormsModule,
     InputTextModule,
@@ -46,15 +58,21 @@ import {TokenInterceptor} from './auth/shared/token.interceptor';
     PasswordModule,
     CalendarModule,
     DropdownModule,
+    DynamicDialogModule,
+    FileUploadModule,
+    RatingModule,
+    ConfirmDialogModule
   ],
   providers: [
     MessageService,
+    ConfirmationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true,
     },
   ],
+  entryComponents: [AddNewHotelComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

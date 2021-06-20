@@ -12,7 +12,7 @@ import { OpinionDto } from './model/opinion-dto';
 export class HotelService {
   constructor(private http: HttpClient) {}
 
-  getHotels(city: string): Observable<HotelDto[]> {
+  getHotels(city: string): Observable<HotelDto[]> { // hotel-search
     const queryParam = city ? new HttpParams().append('city', city) : null;
 
     return this.http.get<HotelDto[]>(`${environment.apiUrl}/hotels`, {
@@ -20,22 +20,22 @@ export class HotelService {
     });
   }
 
-  addHotel(hotelDto: HotelDto): Observable<HotelDto> {
+  addHotel(hotelDto: HotelDto): Observable<HotelDto> { // hotel-search pop-up
     return this.http.post<HotelDto>(`${environment.apiUrl}/hotels`, hotelDto);
   }
 
-  updateHotel(hotelId: number, hotelDto: HotelDto): Observable<HotelDto> {
+  updateHotel(hotelId: number, hotelDto: HotelDto): Observable<HotelDto> { // hotel-search pop-up
     return this.http.put<HotelDto>(
       `${environment.apiUrl}/hotels/${hotelId}`,
       hotelDto
     );
   }
 
-  deleteHotel(hotelId: number): Observable<number> {
+  deleteHotel(hotelId: number): Observable<number> { // hotel-search
     return this.http.delete<number>(`${environment.apiUrl}/hotels/${hotelId}`);
   }
 
-  addOpinion(
+  addOpinion( // room
     hotelId: number,
     opinionRequest: OpinionRequest
   ): Observable<OpinionDto> {

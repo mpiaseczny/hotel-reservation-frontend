@@ -10,6 +10,13 @@ import {MessageService} from 'primeng/api';
 })
 export class AppComponent {
   title = 'hotel-reservation-frontend';
+  // hotel-search
+  // hotel-search pop-up (hotel)
+  // hotel-search pop-up (room)
+  // room-search
+  // room + reservation
+  // room pop-up (reservation)
+  // reservation-list
 
   constructor(public authService: AuthService, private router: Router, private messageService: MessageService) {}
 

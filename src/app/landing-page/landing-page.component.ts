@@ -39,12 +39,12 @@ export class LandingPageComponent implements OnInit {
       this.roomSearchForm.form.markAllAsTouched();
       this.messageService.add({
         severity: 'warn',
-        summary: 'Nie uzupełniono wszystkich pól',
+        summary: 'Nie wpisano nazwy pokoju lub miasta',
       });
       return;
     }
 
-    this.router.navigate(['hotels'], {
+    this.router.navigate(['room-search'], {
       queryParams: {
         city: this.roomSearchRequest.city,
         people: this.roomSearchRequest.people,

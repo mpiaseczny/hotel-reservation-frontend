@@ -14,13 +14,10 @@
     <div class="collapse navbar-collapse" id="navmenu">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" >
-          <a [routerLink]="'hotels'" class="nav-link">Hotele</a>
+          <a [routerLink]="'hotel-search'" class="nav-link">Hotele</a>
         </li>
         <li class="nav-item" *ngIf="!authService.isLoggedIn()">
           <a [routerLink]="'login'" class="nav-link">Logowanie</a>
-        </li>
-        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
-          <a [routerLink]="'signup'" class="nav-link">Rejestracja</a>
         </li>
         <li class="nav-item" *ngIf="authService.isLoggedIn()">
           <a [routerLink]="'reservations'" class="nav-link">Moje rezerwacje</a>
@@ -36,3 +33,5 @@
 <router-outlet></router-outlet>
 
 <p-toast></p-toast>
+
+<p-confirmDialog [acceptLabel]="'Usuń'" [rejectLabel]="'Nie usuwaj'" [closable]="false"></p-confirmDialog>

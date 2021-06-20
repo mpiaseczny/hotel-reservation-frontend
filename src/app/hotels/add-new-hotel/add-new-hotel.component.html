@@ -1,0 +1,97 @@
+<form class="row g-3" ngForm #form="ngForm">
+  <div class="col-md-8">
+    <label for="inputName" class="form-label">Nazwa hotelu</label>
+    <input
+      required
+      type="text"
+      class="form-control"
+      id="inputName"
+      name="name"
+      placeholder="Hilton"
+      [(ngModel)]="hotelDto.name"
+    />
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Rating</label>
+    <p-rating
+      required
+      name="rating"
+      [(ngModel)]="hotelDto.rating"
+      [cancel]="false"
+    ></p-rating>
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">Miasto</label>
+    <input
+      required
+      type="text"
+      class="form-control"
+      id="inputCity"
+      name="city"
+      placeholder="Warszawa"
+      [(ngModel)]="hotelDto.city"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="inputStreet" class="form-label">Ulica</label>
+    <input
+      required
+      type="text"
+      class="form-control"
+      id="inputStreet"
+      name="street"
+      placeholder="al. Jana Pawła 22"
+      [(ngModel)]="hotelDto.street"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="inputPhone" class="form-label">Numer telefonu</label>
+    <input
+      required
+      type="text"
+      class="form-control"
+      id="inputPhone"
+      name="phone"
+      placeholder="+48 000 000 000"
+      [(ngModel)]="hotelDto.phoneNumber"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="inputEmail" class="form-label">Email</label>
+    <input
+      required
+      type="email"
+      class="form-control"
+      id="inputEmail"
+      name="email"
+      placeholder="adres@domena.pl"
+      [(ngModel)]="hotelDto.email"
+    />
+  </div>
+  <div class="col-12">
+    <span>Załącznik (do 2 MB)</span>
+    <p-fileUpload
+      name="files"
+      [showCancelButton]="false"
+      [showUploadButton]="false"
+      [chooseLabel]="'Wybierz'"
+      [accept]="'image/*'"
+      [maxFileSize]="2000000"
+      (onSelect)="onFileAdd($event)"
+    >
+      <ng-template pTemplate="file"></ng-template>
+      <ng-template pTemplate="content"
+        ><img
+          class="ratio-4x3 img-thumbnail"
+          style="width: 400px"
+          [src]="hotelDto?.attachment?.file"
+          alt=""
+      /></ng-template>
+    </p-fileUpload>
+  </div>
+  <div class="col-12 mt-3">
+    <button type="submit" class="btn btn-primary" (click)="onSave()">
+      Zapisz
+    </button>
+  </div>
+</form>

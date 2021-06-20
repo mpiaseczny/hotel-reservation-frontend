@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="d-flex justify-content-between my-3 col-12">
+    <div class="d-flex justify-content-between col-12 col-md-6">
+      <input
+        class="w-100 me-3"
+        [(ngModel)]="city"
+        name="city"
+        type="text"
+        pInputText
+        placeholder="Miasto"
+      />
+      <button
+        class="btn btn-dark btn-lg"
+        type="button"
+        (click)="searchHotels()"
+      >
+        Szukaj
+      </button>
+    </div>
+    <button
+      *appEnableForRole="'ADMIN'"
+      class="btn btn-success ms-3"
+      type="button"
+      (click)="showAddDialog()"
+    >
+      Dodaj hotel
+    </button>
+  </div>
+
+  <div class="hotel-container" *ngFor="let hotel of hotels">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            class="ratio-4x3 img-thumbnail"
+            [src]="hotel?.attachment?.file"
+            alt="Hotel Photo"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title position-relative">
+              <span>{{ hotel?.name }}</span>
+              <div class="d-inline-block ms-3">
+                <p-rating
+                  [ngModel]="hotel.rating"
+                  [cancel]="false"
+                  [readonly]="true"
+                ></p-rating>
+              </div>
+              <div
+                *appEnableForRole="'ADMIN'"
+                class="position-absolute end-0 top-0"
+              >
+                <i-bs
+                  name="pen"
+                  class="text-primary"
+                  role="button"
+                  (click)="onEdit(hotel)"
+                ></i-bs>
+                <i-bs
+                  name="trash"
+                  class="ms-3 text-danger"
+                  role="button"
+                  (click)="onDelete(hotel)"
+                ></i-bs>
+              </div>
+            </h5>
+            <p class="card-text">
+              <small class="text-muted d-block">{{ hotel?.city }}</small>
+              <small class="text-muted">{{ hotel?.street }}</small>
+            </p>
+            <p class="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Accusantium ad aliquid consequatur cum dicta enim est, inventore
+              ipsam iusto magnam maxime molestias nam nobis officia porro rem
+              repudiandae ullam voluptatem!
+            </p>
+            <p class="card-text">
+              <small class="text-muted d-block">{{ hotel?.phoneNumber }}</small>
+              <small class="text-muted">{{ hotel?.email }}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
