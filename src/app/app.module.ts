@@ -22,7 +22,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { HotelSearchComponent } from './hotels/hotel-search/hotel-search.component';
 import { TokenInterceptor } from './auth/shared/token.interceptor';
-import { RoomSearchComponent } from './room-search/room-search.component';
+import { RoomSearchComponent } from './rooms/room-search/room-search.component';
 import { EnableForRoleDirective } from './auth/shared/enable-for-role.directive';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { CommonModule } from '@angular/common';
@@ -30,6 +30,10 @@ import { AddNewHotelComponent } from './hotels/add-new-hotel/add-new-hotel.compo
 import { FileUploadModule } from 'primeng/fileupload';
 import {RatingModule} from 'primeng/rating';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { RoomDialogComponent } from './rooms/room-dialog/room-dialog.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {CheckboxModule} from 'primeng/checkbox';
+import { RoomViewComponent } from './rooms/room-view/room-view.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     RoomSearchComponent,
     EnableForRoleDirective,
     AddNewHotelComponent,
+    RoomDialogComponent,
+    RoomViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +67,9 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     DynamicDialogModule,
     FileUploadModule,
     RatingModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    InputTextareaModule,
+    CheckboxModule
   ],
   providers: [
     MessageService,

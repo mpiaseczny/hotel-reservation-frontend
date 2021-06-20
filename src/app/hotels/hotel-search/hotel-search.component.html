@@ -9,11 +9,7 @@
         pInputText
         placeholder="Miasto"
       />
-      <button
-        class="btn btn-dark btn-lg"
-        type="button"
-        (click)="searchHotels()"
-      >
+      <button class="btn btn-dark" type="button" (click)="searchHotels()">
         Szukaj
       </button>
     </div>
@@ -40,7 +36,9 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title position-relative">
-              <span>{{ hotel?.name }}</span>
+              <span (click)="onHotelNameClick(hotel?.name)" role="button">{{
+                hotel?.name
+              }}</span>
               <div class="d-inline-block ms-3">
                 <p-rating
                   [ngModel]="hotel.rating"
@@ -79,6 +77,15 @@
             <p class="card-text">
               <small class="text-muted d-block">{{ hotel?.phoneNumber }}</small>
               <small class="text-muted">{{ hotel?.email }}</small>
+            </p>
+            <p class="card-text text-end" *appEnableForRole="'ADMIN'">
+              <button
+                class="btn btn-success"
+                type="button"
+                (click)="showAddRoomDialog(hotel?.id)"
+              >
+                Dodaj pokój
+              </button>
             </p>
           </div>
         </div>

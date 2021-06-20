@@ -8,5 +8,5 @@ export interface RoomListItem {
   price?: number;
   capacity?: number;
   features?: FeatureType[];
-  attachments?: FileWrapper[];
+  attachment?: FileWrapper;
 }

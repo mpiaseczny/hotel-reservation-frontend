@@ -15,10 +15,11 @@ export class LandingPageComponent implements OnInit {
     { label: '2', value: 2 },
     { label: '3', value: 3 },
     { label: '4', value: 4 },
+    { label: '5', value: 5 },
   ];
 
   roomSearchRequest: RoomSearchRequest = {
-    city: null,
+    hotelNameOrCity: null,
     dateFrom: null,
     dateTo: null,
     people: null,
@@ -46,7 +47,7 @@ export class LandingPageComponent implements OnInit {
 
     this.router.navigate(['room-search'], {
       queryParams: {
-        city: this.roomSearchRequest.city,
+        hotelNameOrCity: this.roomSearchRequest.hotelNameOrCity,
         people: this.roomSearchRequest.people,
         dateFrom: this.roomSearchRequest.dateFrom,
         dateTo: this.roomSearchRequest.dateTo,

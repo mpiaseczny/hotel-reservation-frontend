@@ -1,0 +1,104 @@
+<div class="container">
+  <div ngForm #roomSearchForm="ngForm">
+    <div class="row my-4">
+      <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
+        <p-calendar
+          name="date-from"
+          [showIcon]="true"
+          [readonlyInput]="true"
+          [(ngModel)]="dateFrom"
+          (ngModelChange)="onDateFromChange($event)"
+          placeholder="Od kiedy"
+        ></p-calendar>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
+        <p-calendar
+          name="date-to"
+          [(ngModel)]="dateTo"
+          (ngModelChange)="onDateToChange($event)"
+          [showIcon]="true"
+          [readonlyInput]="true"
+          placeholder="Do kiedy"
+        ></p-calendar>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
+        <p-dropdown
+          name="people"
+          placeholder="Osoby"
+          [options]="roomSizeOptions"
+          [(ngModel)]="roomSearchRequest.people"
+        ></p-dropdown>
+      </div>
+      <div class="col-md-8 col-sm-8 col-xs-6 col-pad-3">
+        <input
+          required
+          [(ngModel)]="roomSearchRequest.hotelNameOrCity"
+          name="city"
+          type="text"
+          pInputText
+          placeholder="Nazwa hotelu lub miasto"
+        />
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mt-3 mt-sm-0">
+        <button class="btn btn-dark" type="button" (click)="onSearch()">
+          Szukaj
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let room of rooms">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            class="ratio-4x3 img-thumbnail"
+            [src]="room?.attachment?.file"
+            alt="Hotel Photo"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title position-relative">
+              <span>{{ room?.name }}</span>
+              <div
+                *appEnableForRole="'ADMIN'"
+                class="position-absolute end-0 top-0"
+              >
+                <i-bs
+                  name="trash"
+                  class="ms-3 text-danger"
+                  role="button"
+                  (click)="onDelete(room)"
+                ></i-bs>
+              </div>
+            </h5>
+            <p class="card-text">
+              <small class="text-muted lead me-5">{{ room?.capacity + ' os.' }}</small>
+              <small class="text-muted lead">{{ room?.price + ' zł' }}</small>
+            </p>
+            <p class="card-text">{{ room?.description }}</p>
+            <p class="card-text">
+              <span class="d-inline-block col-6 col-md-4 mb-2" *ngFor="let featureId of allFeatures">
+                <i-bs
+                  [name]="
+                    roomContainsFeature(featureId, room?.features)
+                      ? 'check2'
+                      : 'x'
+                  "
+                  [ngClass]="
+                    roomContainsFeature(featureId, room?.features)
+                      ? 'text-success'
+                      : 'text-danger'
+                  "
+                  class="me-1"
+                ></i-bs>
+                <span>{{ featuresTranslationMap[featureId]?.label }}</span>
+          </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

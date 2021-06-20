@@ -1,0 +1,77 @@
+<form class="row g-3" ngForm #form="ngForm">
+  <div class="col-12">
+    <label for="inputName" class="form-label">Nazwa pokoju</label>
+    <input
+      required
+      type="text"
+      class="form-control"
+      id="inputName"
+      name="name"
+      placeholder="Pokój dwuosobowy"
+      [(ngModel)]="roomRequest.name"
+    />
+  </div>
+  <div class="col-12">
+    <label for="inputDescription" class="form-label d-block">Opis</label>
+    <textarea required id="inputDescription" class="d-block w-100" [maxLength]="250" [rows]="2" pInputTextarea name="description" autoResize="autoResize" [(ngModel)]="roomRequest.description"></textarea>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPrice" class="form-label">Cena</label>
+    <input
+      required
+      type="number"
+      class="form-control"
+      id="inputPrice"
+      name="price"
+      placeholder="120"
+      [(ngModel)]="roomRequest.price"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="inputCapacity" class="form-label">Liczba miejsc</label>
+    <input
+      required
+      type="number"
+      class="form-control"
+      id="inputCapacity"
+      name="capacity"
+      placeholder="2"
+      [(ngModel)]="roomRequest.capacity"
+    />
+  </div>
+  <div class="col-12">
+    <label class="form-label">Udogodnienia</label>
+    <div class="d-flex flex-wrap">
+      <p-checkbox class="me-4 mb-3" *ngFor="let featureId of allFeatures" [(ngModel)]="roomRequest.features" [value]="featureId" [label]="featuresTranslationMap[featureId]?.label" name="features-group"></p-checkbox>
+    </div>
+  </div>
+  <div class="col-12">
+    <span>Załączniki (do 2 MB każdy)</span>
+    <p-fileUpload
+      name="files"
+      [multiple]="true"
+      [showCancelButton]="false"
+      [showUploadButton]="false"
+      [chooseLabel]="'Wybierz'"
+      [accept]="'image/*'"
+      [maxFileSize]="2000000"
+      (onSelect)="onFileAdd($event)"
+    >
+      <ng-template pTemplate="file"></ng-template>
+      <ng-template pTemplate="content"
+      ><ng-container *ngFor="let image of roomRequest?.attachments">
+        <img
+        class="ratio-4x3 img-thumbnail me-2 mb-2 upload-content"
+        [src]="image?.file"
+        alt=""
+      />
+      </ng-container>
+      </ng-template>
+    </p-fileUpload>
+  </div>
+  <div class="col-12 mt-3">
+    <button type="submit" class="btn btn-primary" (click)="onSave()">
+      Zapisz
+    </button>
+  </div>
+</form>

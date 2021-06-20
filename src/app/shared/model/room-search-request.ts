@@ -1,5 +1,5 @@
 export interface RoomSearchRequest {
-  city?: string;
+  hotelNameOrCity?: string;
   dateFrom?: number;
   dateTo?: number;
   people?: number;

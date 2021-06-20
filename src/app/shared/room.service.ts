@@ -6,6 +6,7 @@ import { RoomListItem } from './model/room-list-item';
 import { RoomDto } from './model/room-dto';
 import { TimeInterval } from './model/time-interval';
 import { RoomRequest } from './model/room-request';
+import {RoomSearchRequest} from './model/room-search-request';
 
 @Injectable({
   providedIn: 'root',
@@ -13,25 +14,19 @@ import { RoomRequest } from './model/room-request';
 export class RoomService {
   constructor(private http: HttpClient) {}
 
-  getRooms(
-    nameOrCity: string,
-    dateFrom: number,
-    dateTo: number,
-    people: number
-  ): Observable<RoomListItem[]> { // room-search
-    const params = new HttpParams();
-    params.append('nameOrCity', nameOrCity);
-    if (dateFrom !== null && dateFrom !== undefined) {
-      params.append('dateFrom', dateFrom + '');
+  getRooms(roomSearchRequest: RoomSearchRequest): Observable<RoomListItem[]> { // room-search
+    let params = new HttpParams().append('nameOrCity', roomSearchRequest.hotelNameOrCity);
+    if (roomSearchRequest?.dateFrom !== null && roomSearchRequest?.dateFrom !== undefined) {
+      params = params.append('dateFrom', roomSearchRequest.dateFrom + '');
     }
-    if (dateTo !== null && dateTo !== undefined) {
-      params.append('dateTo', dateTo + '');
+    if (roomSearchRequest?.dateTo !== null && roomSearchRequest?.dateTo !== undefined) {
+      params = params.append('dateTo', roomSearchRequest.dateTo + '');
     }
-    if (people !== null && people !== undefined) {
-      params.append('people', people + '');
+    if (roomSearchRequest?.people !== null && roomSearchRequest?.people !== undefined) {
+      params = params.append('people', roomSearchRequest.people + '');
     }
 
-    return this.http.get<RoomListItem[]>(`${environment.apiUrl}/rooms`);
+    return this.http.get<RoomListItem[]>(`${environment.apiUrl}/rooms`, {params});
   }
 
   getRoom(roomId: number): Observable<RoomDto> { // room

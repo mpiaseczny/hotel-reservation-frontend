@@ -9,7 +9,7 @@ export type FeatureType =
   | 'ROOM_SERVICE'
   | 'FREE_WIFI';
 
-const allFeatures: FeatureType[] = [
+export const allFeatures: FeatureType[] = [
   'AIR_CONDITIONING',
   'BALCONY',
   'GYM',
@@ -21,7 +21,7 @@ const allFeatures: FeatureType[] = [
   'FREE_WIFI',
 ];
 
-const feautresTranslationMap = {
+export const featuresTranslationMap = {
   AIR_CONDITIONING: {label: 'Klimatyzacja'},
   BALCONY: {label: 'Balkon'},
   GYM: {label: 'Siłownia'},

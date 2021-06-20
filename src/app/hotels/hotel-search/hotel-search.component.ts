@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelDto } from '../../shared/model/hotel-dto';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { HotelService } from '../../shared/hotel.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AddNewHotelComponent } from '../add-new-hotel/add-new-hotel.component';
+import {RoomDialogComponent} from '../../rooms/room-dialog/room-dialog.component';
+import {RoomRequest} from '../../shared/model/room-request';
+import {RoomService} from '../../shared/room.service';
 
 @Component({
   selector: 'app-hotel-search',
@@ -21,7 +24,9 @@ export class HotelSearchComponent implements OnInit {
     private hotelService: HotelService,
     private messageService: MessageService,
     private dialogService: DialogService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private roomService: RoomService,
+    private router: Router
   ) {
     this.route.queryParams.subscribe((params) => {
       this.city = params.city;
@@ -117,6 +122,42 @@ export class HotelSearchComponent implements OnInit {
           });
           this.getHotels();
         });
+      },
+    });
+  }
+
+  showAddRoomDialog(hotelId: number) {
+    const ref = this.dialogService.open(RoomDialogComponent, {
+      header: 'Dodaj pokój',
+      width: '70%',
+      baseZIndex: 100,
+      data: { hotelId },
+    });
+
+    ref.onClose.subscribe((roomRequest: RoomRequest) => {
+      if (roomRequest) {
+        this.roomService.addRoom(roomRequest).subscribe(
+          () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Pomyślnie dodano pokój',
+            });
+          },
+          () => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Błąd przy dodawaniu pokoju',
+            });
+          }
+        );
+      }
+    });
+  }
+
+  onHotelNameClick(name: string) {
+    this.router.navigate(['room-search'], {
+      queryParams: {
+        hotelNameOrCity: name
       },
     });
   }
