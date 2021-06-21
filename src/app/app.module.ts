@@ -34,6 +34,7 @@ import { RoomDialogComponent } from './rooms/room-dialog/room-dialog.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {CheckboxModule} from 'primeng/checkbox';
 import { RoomViewComponent } from './rooms/room-view/room-view.component';
+import {CarouselModule} from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -48,29 +49,30 @@ import { RoomViewComponent } from './rooms/room-view/room-view.component';
     RoomDialogComponent,
     RoomViewComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    NgxWebstorageModule.forRoot(),
-    NgxBootstrapIconsModule.pick(allIcons),
-    CommonModule,
-    CardModule,
-    FormsModule,
-    InputTextModule,
-    ButtonModule,
-    HttpClientModule,
-    ToastModule,
-    PasswordModule,
-    CalendarModule,
-    DropdownModule,
-    DynamicDialogModule,
-    FileUploadModule,
-    RatingModule,
-    ConfirmDialogModule,
-    InputTextareaModule,
-    CheckboxModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        NgxWebstorageModule.forRoot(),
+        NgxBootstrapIconsModule.pick(allIcons),
+        CommonModule,
+        CardModule,
+        FormsModule,
+        InputTextModule,
+        ButtonModule,
+        HttpClientModule,
+        ToastModule,
+        PasswordModule,
+        CalendarModule,
+        DropdownModule,
+        DynamicDialogModule,
+        FileUploadModule,
+        RatingModule,
+        ConfirmDialogModule,
+        InputTextareaModule,
+        CheckboxModule,
+        CarouselModule
+    ],
   providers: [
     MessageService,
     ConfirmationService,

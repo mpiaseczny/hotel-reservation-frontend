@@ -15,7 +15,6 @@ export class AppComponent {
   // hotel-search pop-up (room)
   // room-search
   // room + reservation
-  // room pop-up (reservation)
   // reservation-list
 
   constructor(public authService: AuthService, private router: Router, private messageService: MessageService) {}

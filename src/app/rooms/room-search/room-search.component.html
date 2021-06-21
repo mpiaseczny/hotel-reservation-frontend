@@ -60,7 +60,7 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title position-relative">
-              <span>{{ room?.name }}</span>
+              <span (click)="onRoomNameClick(room)" role="button">{{ room?.name }}</span>
               <div
                 *appEnableForRole="'ADMIN'"
                 class="position-absolute end-0 top-0"

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { RoomSearchRequest } from '../../shared/model/room-search-request';
 import {ConfirmationService, MessageService, SelectItem} from 'primeng/api';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { RoomService } from '../../shared/room.service';
 import { RoomListItem } from '../../shared/model/room-list-item';
 import {
@@ -47,7 +47,8 @@ export class RoomSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private roomService: RoomService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {
     this.allFeatures = allFeatures;
     this.featuresTranslationMap = featuresTranslationMap;
@@ -110,5 +111,9 @@ export class RoomSearchComponent implements OnInit {
         });
       },
     });
+  }
+
+  onRoomNameClick(room: RoomListItem) {
+    this.router.navigate(['room-view', room?.id]);
   }
 }

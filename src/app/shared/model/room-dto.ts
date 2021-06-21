@@ -11,6 +11,7 @@ export interface RoomDto {
   features?: FeatureType[];
   attachments?: FileWrapper[];
   opinions?: OpinionDto[];
+  hotelId: number;
   hotelName?: string;
   rating?: number;
   city?: string;

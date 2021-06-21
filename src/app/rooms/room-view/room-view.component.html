@@ -1,1 +1,146 @@
-<p>room-view works!</p>
+<div class="container">
+  <div class="card col-12 my-4">
+    <div class="row mt-2">
+      <div class="col-xxl-6">
+        <p-carousel [value]="room?.attachments">
+          <ng-template let-attachment pTemplate="item">
+            <img
+              class="ratio-4x3 img-thumbnail upload-content"
+              [src]="attachment?.file"
+              alt=""
+            />
+          </ng-template>
+        </p-carousel>
+      </div>
+      <div class="col-xxl-6 px-4 px-xxl-2">
+        <p class="lead">{{ room?.name }}</p>
+        <p class="card-text">
+          <small class="text-muted lead me-5">{{
+            room?.capacity + " os."
+          }}</small>
+          <small class="text-muted lead">{{ room?.price + " zł" }}</small>
+        </p>
+        <p>{{ room?.description }}</p>
+        <p>
+          <span
+            class="d-inline-block col-6 col-md-4 mb-2"
+            *ngFor="let featureId of allFeatures"
+          >
+            <i-bs
+              [name]="
+                roomContainsFeature(featureId, room?.features) ? 'check2' : 'x'
+              "
+              [ngClass]="
+                roomContainsFeature(featureId, room?.features)
+                  ? 'text-success'
+                  : 'text-danger'
+              "
+              class="me-1"
+            ></i-bs>
+            <span>{{ featuresTranslationMap[featureId]?.label }}</span>
+          </span>
+        </p>
+        <hr class="reservation-line" />
+        <p *ngIf="authService.isLoggedIn()">
+          <span class="d-inline-block col-7">
+            <span class="d-block">
+              <span class="lead me-2">Termin:</span>
+              <p-calendar
+                [(ngModel)]="dates"
+                [selectionMode]="'range'"
+                (ngModelChange)="onDateChange()"
+                [disabledDates]="reservedDates"
+                [minDate]="tomorrow"
+                [baseZIndex]="100"
+              ></p-calendar>
+            </span>
+          </span>
+          <span class="d-inline-block col-5">
+            <span class="lead me-2">Cena:</span>
+            <span class="lead">{{ reservationRequest?.price + " zł" }}</span>
+          </span>
+          <span class="d-inline-block col-6 mt-3">
+            <button type="submit" class="btn btn-primary" (click)="onReserve()">
+              Zarezerwuj
+            </button>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-8 mb-4">
+      <div class="card">
+        <div class="col-12">
+          <p-carousel [value]="room?.opinions" [numVisible]="2" [numScroll]="1">
+            <ng-template pTemplate="header">
+              <h5>Opinie o {{ room?.hotelName }}</h5>
+            </ng-template>
+            <ng-template let-opinion pTemplate="item">
+              <div class="card h-100 mx-2">
+                <div class="card-body">
+                  <h5
+                    class="card-title d-flex justify-content-between flex-wrap"
+                  >
+                    <span>{{ opinion?.username }}</span>
+                    <div class="d-inline-block mt-2 mt-xxl-0">
+                      <p-rating
+                        [ngModel]="opinion?.rate"
+                        [cancel]="false"
+                        [readonly]="true"
+                      ></p-rating>
+                    </div>
+                  </h5>
+                  <p class="card-text mt-4">{{ opinion?.comment }}</p>
+                </div>
+              </div>
+            </ng-template>
+          </p-carousel>
+        </div>
+        <div class="col-12" *ngIf="authService.isLoggedIn()">
+          <div class="mx-3">
+            <textarea
+              required
+              class="w-100"
+              [maxLength]="250"
+              [rows]="2"
+              pInputTextarea
+              name="opinion"
+              autoResize="autoResize"
+              [(ngModel)]="opinionRequest.comment"
+            ></textarea>
+          </div>
+          <p-rating
+            class="col-12 mt-3 pe-3 d-block text-end"
+            [ngModel]="opinionRequest?.rate"
+            [cancel]="false"
+          ></p-rating>
+          <button
+            type="submit"
+            class="btn btn-primary col-12 m-3 w-auto float-end"
+            (click)="onOpinionAdd()"
+          >
+            Dodaj opinię
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card border-warning mb-3">
+        <div class="card-header">Hotel</div>
+        <div class="card-body">
+          <h5 class="card-title">{{ room?.hotelName }}</h5>
+          <p class="card-text">
+            <small class="text-muted d-block">{{ room?.city }}</small>
+            <small class="text-muted">{{ room?.street }}</small>
+          </p>
+          <hr />
+          <p class="card-text">
+            <small class="text-muted d-block">{{ room?.phoneNumber }}</small>
+            <small class="text-muted">{{ room?.email }}</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

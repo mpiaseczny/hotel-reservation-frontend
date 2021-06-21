@@ -13,6 +13,7 @@ export interface ReservationDto {
   dateTo?: number;
   totalPrice?: number;
   opinions?: OpinionDto[];
+  hotelId: number;
   hotelName?: string;
   rating?: number;
   city?: string;

@@ -15,7 +15,7 @@ export class RoomService {
   constructor(private http: HttpClient) {}
 
   getRooms(roomSearchRequest: RoomSearchRequest): Observable<RoomListItem[]> { // room-search
-    let params = new HttpParams().append('nameOrCity', roomSearchRequest.hotelNameOrCity);
+    let params = new HttpParams().append('hotelNameOrCity', roomSearchRequest.hotelNameOrCity);
     if (roomSearchRequest?.dateFrom !== null && roomSearchRequest?.dateFrom !== undefined) {
       params = params.append('dateFrom', roomSearchRequest.dateFrom + '');
     }
