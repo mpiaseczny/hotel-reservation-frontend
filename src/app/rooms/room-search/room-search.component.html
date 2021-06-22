@@ -4,9 +4,11 @@
       <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
         <p-calendar
           name="date-from"
+          dateFormat="DD, d MM yy"
           [showIcon]="true"
           [readonlyInput]="true"
           [(ngModel)]="dateFrom"
+          [firstDayOfWeek]="1"
           (ngModelChange)="onDateFromChange($event)"
           placeholder="Od kiedy"
         ></p-calendar>
@@ -14,9 +16,11 @@
       <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
         <p-calendar
           name="date-to"
+          dateFormat="DD, d MM yy"
           [(ngModel)]="dateTo"
           (ngModelChange)="onDateToChange($event)"
           [showIcon]="true"
+          [firstDayOfWeek]="1"
           [readonlyInput]="true"
           placeholder="Do kiedy"
         ></p-calendar>
@@ -47,6 +51,14 @@
     </div>
   </div>
 
+  <div *ngIf="!rooms?.length">
+    <div class="card mb-3">
+      <div class="card-body">
+        <span class="card-title">Lista pokojów jest pusta</span>
+      </div>
+    </div>
+  </div>
+
   <div *ngFor="let room of rooms">
     <div class="card mb-3">
       <div class="row g-0">
@@ -54,7 +66,7 @@
           <img
             class="ratio-4x3 img-thumbnail"
             [src]="room?.attachment?.file"
-            alt="Hotel Photo"
+            alt="Room Photo"
           />
         </div>
         <div class="col-md-8">
@@ -75,7 +87,7 @@
             </h5>
             <p class="card-text">
               <small class="text-muted lead me-5">{{ room?.capacity + ' os.' }}</small>
-              <small class="text-muted lead">{{ room?.price + ' zł' }}</small>
+              <small class="text-muted lead">{{ (room?.price | number:'1.2-2') + ' zł' }}</small>
             </p>
             <p class="card-text">{{ room?.description }}</p>
             <p class="card-text">

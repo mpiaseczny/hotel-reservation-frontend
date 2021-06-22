@@ -12,19 +12,19 @@ import { ReservationRequest } from './model/reservation-request';
 export class ReservationService {
   constructor(private http: HttpClient) {}
 
-  getReservations(): Observable<ReservationListItem[]> { // reservation-list
+  getReservations(): Observable<ReservationListItem[]> {
     return this.http.get<ReservationListItem[]>(
       `${environment.apiUrl}/reservations`
     );
   }
 
-  getReservation(reservationId: number): Observable<ReservationDto> { // reservation
+  getReservation(reservationId: number): Observable<ReservationDto> {
     return this.http.get<ReservationDto>(
       `${environment.apiUrl}/reservations/${reservationId}`
     );
   }
 
-  addReservation( // room pop-up
+  addReservation(
     reservationRequest: ReservationRequest
   ): Observable<ReservationDto> {
     return this.http.post<ReservationDto>(
@@ -33,7 +33,7 @@ export class ReservationService {
     );
   }
 
-  deleteReservation(reservationId: number): Observable<number> { // reservation
+  deleteReservation(reservationId: number): Observable<number> {
     return this.http.delete<number>(
       `${environment.apiUrl}/reservations/${reservationId}`
     );

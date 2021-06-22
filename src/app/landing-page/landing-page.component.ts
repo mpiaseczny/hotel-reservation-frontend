@@ -40,7 +40,7 @@ export class LandingPageComponent implements OnInit {
       this.roomSearchForm.form.markAllAsTouched();
       this.messageService.add({
         severity: 'warn',
-        summary: 'Nie wpisano nazwy pokoju lub miasta',
+        summary: 'Nie wpisano nazwy hotelu lub miasta',
       });
       return;
     }

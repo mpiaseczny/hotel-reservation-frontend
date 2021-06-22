@@ -29,7 +29,7 @@ export class HotelSearchComponent implements OnInit {
     private router: Router
   ) {
     this.route.queryParams.subscribe((params) => {
-      this.city = params.city;
+      this.city = params?.city;
     });
   }
 

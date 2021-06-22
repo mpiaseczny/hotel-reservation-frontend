@@ -2,4 +2,10 @@
   .p-toast {
     z-index: 1200 !important;
   }
+
+  .p-calendar {
+    span.p-disabled {
+      background: #FFE0E0;
+    }
+  }
 }

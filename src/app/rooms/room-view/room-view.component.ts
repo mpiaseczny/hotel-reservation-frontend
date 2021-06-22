@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RoomDto } from '../../shared/model/room-dto';
 import { RoomService } from '../../shared/room.service';
@@ -11,9 +11,10 @@ import {
 import { ReservationRequest } from '../../shared/model/reservation-request';
 import { ReservationService } from '../../shared/reservation.service';
 import * as dayjs from 'dayjs';
-import {HotelService} from '../../shared/hotel.service';
-import {OpinionRequest} from '../../shared/model/opinion-request';
-import {AuthService} from '../../auth/shared/auth.service';
+import { HotelService } from '../../shared/hotel.service';
+import { OpinionRequest } from '../../shared/model/opinion-request';
+import { AuthService } from '../../auth/shared/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-room-view',
@@ -27,7 +28,7 @@ export class RoomViewComponent implements OnInit {
 
   opinionRequest: OpinionRequest = {
     rate: 5,
-    comment: ''
+    comment: '',
   };
 
   allFeatures: FeatureType[];
@@ -43,7 +44,9 @@ export class RoomViewComponent implements OnInit {
     price: 0,
   };
   dates: Date[];
-  newOpinion: string = '';
+
+  @ViewChild('reservationForm')
+  reservationForm: NgForm;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,16 +86,25 @@ export class RoomViewComponent implements OnInit {
       }
     );
 
-    this.roomService.getReservationTimes(this.roomId).subscribe((reservationTimes) => {
-      reservationTimes?.forEach((reservationTime) => {
-        this.reservedDates = [
-          ...this.reservedDates,
-          ...this.getDaysBetweenDates(reservationTime?.dateFrom, reservationTime?.dateTo)
-        ];
-      });
-    }, () => {
-      this.messageService.add({severity: 'error', summary: 'Błąd przy pobieraniu zarezerwowanych terminów'});
-    });
+    this.roomService.getReservationTimes(this.roomId).subscribe(
+      (reservationTimes) => {
+        reservationTimes?.forEach((reservationTime) => {
+          this.reservedDates = [
+            ...this.reservedDates,
+            ...this.getDaysBetweenDates(
+              reservationTime?.dateFrom,
+              reservationTime?.dateTo
+            ),
+          ];
+        });
+      },
+      () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd przy pobieraniu zarezerwowanych terminów',
+        });
+      }
+    );
   }
 
   getDaysBetweenDates(startDate, endDate): Date[] {
@@ -109,6 +121,8 @@ export class RoomViewComponent implements OnInit {
 
   onDateChange() {
     if (this.dates[0] && this.dates[1]) {
+      this.dates[0].setHours(0, 0, 0, 0);
+      this.dates[1].setHours(0, 0, 0, 0);
       const daysBetween = this.getDaysBetweenDates(
         this.dates[0],
         this.dates[1]
@@ -120,11 +134,25 @@ export class RoomViewComponent implements OnInit {
           )
         )
       ) {
-        this.messageService.add({severity: 'warn', summary: 'Kolizja z inną rezerwacją. Wybierz inne daty'});
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Kolizja z inną rezerwacją. Wybierz inne daty',
+        });
         this.dates = null;
         this.reservationRequest.price = 0;
         return;
       }
+      const firstDateTimestamp = new Date(this.dates[0]).getTime();
+      const secondsDateTimestamp = new Date(this.dates[1]).getTime();
+      this.reservationRequest.dateFrom =
+        firstDateTimestamp < secondsDateTimestamp
+          ? firstDateTimestamp
+          : secondsDateTimestamp;
+      this.reservationRequest.dateTo =
+        firstDateTimestamp < secondsDateTimestamp
+          ? secondsDateTimestamp
+          : firstDateTimestamp;
+
       const daysCount = Math.abs(
         dayjs(this.dates[1]).diff(dayjs(this.dates[0]), 'days')
       );
@@ -132,20 +160,69 @@ export class RoomViewComponent implements OnInit {
       return;
     }
 
+    this.reservationRequest.dateFrom = null;
+    this.reservationRequest.dateTo = null;
     this.reservationRequest.price = 0;
   }
 
-  onReserve() {}
+  onReserve() {
+    if (
+      !this.reservationRequest.dateFrom ||
+      !this.reservationRequest.dateTo ||
+      this.reservationRequest.dateFrom === this.reservationRequest.dateTo
+    ) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Zaznacz zakres dat do rezerwacji',
+      });
+      return;
+    }
+
+    this.reservationService.addReservation(this.reservationRequest).subscribe(
+      (reservationDto) => {
+        this.messageService.add({
+          severity: 'success',
+          summary:
+            'Pomyślnie dokonano rezerwacji pokoju w ' +
+            reservationDto?.hotelName,
+          detail: 'Twoje rezerwacje są widoczne w zakładce Moje rezerwacje',
+        });
+      },
+      () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Zarezerwowano już ten termin',
+        });
+      }
+    );
+  }
 
   onOpinionAdd() {
-    if (this.opinionRequest.comment !== '') {
-      this.hotelService.addOpinion(this.room.hotelId, this.opinionRequest).subscribe((opinionDto) => {
-        this.room.opinions.push(opinionDto);
-        this.opinionRequest.comment = '';
-        this.messageService.add({severity: 'success', summary: 'Dodano komentarz'});
-      }, () => {
-        this.messageService.add({severity: 'error', summary: 'Błąd przy dodawaniu komentarza'});
+    if (this.opinionRequest.comment === '') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Pole opinii jest puste',
       });
+      return;
     }
+
+    this.hotelService
+      .addOpinion(this.room.hotelId, this.opinionRequest)
+      .subscribe(
+        (opinionDto) => {
+          this.room.opinions.push(opinionDto);
+          this.opinionRequest.comment = '';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Dodano komentarz',
+          });
+        },
+        () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Błąd przy dodawaniu komentarza',
+          });
+        }
+      );
   }
 }

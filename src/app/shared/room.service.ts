@@ -14,7 +14,7 @@ import {RoomSearchRequest} from './model/room-search-request';
 export class RoomService {
   constructor(private http: HttpClient) {}
 
-  getRooms(roomSearchRequest: RoomSearchRequest): Observable<RoomListItem[]> { // room-search
+  getRooms(roomSearchRequest: RoomSearchRequest): Observable<RoomListItem[]> {
     let params = new HttpParams().append('hotelNameOrCity', roomSearchRequest.hotelNameOrCity);
     if (roomSearchRequest?.dateFrom !== null && roomSearchRequest?.dateFrom !== undefined) {
       params = params.append('dateFrom', roomSearchRequest.dateFrom + '');
@@ -29,21 +29,21 @@ export class RoomService {
     return this.http.get<RoomListItem[]>(`${environment.apiUrl}/rooms`, {params});
   }
 
-  getRoom(roomId: number): Observable<RoomDto> { // room
+  getRoom(roomId: number): Observable<RoomDto> {
     return this.http.get<RoomDto>(`${environment.apiUrl}/rooms/${roomId}`);
   }
 
-  getReservationTimes(roomId: number): Observable<TimeInterval[]> { // room pop-up
+  getReservationTimes(roomId: number): Observable<TimeInterval[]> {
     return this.http.get<TimeInterval[]>(
       `${environment.apiUrl}/rooms/${roomId}/reservation-times`
     );
   }
 
-  addRoom(roomRequest: RoomRequest): Observable<RoomDto> { // hotel-search pop-up
+  addRoom(roomRequest: RoomRequest): Observable<RoomDto> {
     return this.http.post<RoomDto>(`${environment.apiUrl}/rooms`, roomRequest);
   }
 
-  updateRoom(roomId: number, roomRequest: RoomRequest): Observable<RoomDto> { // hotel-search pop-up
+  updateRoom(roomId: number, roomRequest: RoomRequest): Observable<RoomDto> {
     return this.http.put<RoomDto>(
       `${environment.apiUrl}/rooms/${roomId}`,
       roomRequest

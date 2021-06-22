@@ -2,7 +2,7 @@
   <div class="card col-12 my-4">
     <div class="row mt-2">
       <div class="col-xxl-6">
-        <p-carousel [value]="room?.attachments">
+        <p-carousel [value]="reservation?.attachments">
           <ng-template let-attachment pTemplate="item">
             <img
               class="ratio-4x3 img-thumbnail upload-content"
@@ -13,14 +13,16 @@
         </p-carousel>
       </div>
       <div class="col-xxl-6 px-4 px-xxl-2">
-        <p class="lead">{{ room?.name }}</p>
+        <p class="lead">{{ reservation?.name }}</p>
         <p class="card-text">
           <small class="text-muted lead me-5">{{
-            room?.capacity + " os."
+            reservation?.capacity + " os."
           }}</small>
-          <small class="text-muted lead">{{ (room?.price | number:'1.2-2') + " zł" }}</small>
+          <small class="text-muted lead">{{
+            reservation?.totalPrice + " zł"
+          }}</small>
         </p>
-        <p>{{ room?.description }}</p>
+        <p>{{ reservation?.description }}</p>
         <p>
           <span
             class="d-inline-block col-6 col-md-4 mb-2"
@@ -28,10 +30,12 @@
           >
             <i-bs
               [name]="
-                roomContainsFeature(featureId, room?.features) ? 'check2' : 'x'
+                roomContainsFeature(featureId, reservation?.features)
+                  ? 'check2'
+                  : 'x'
               "
               [ngClass]="
-                roomContainsFeature(featureId, room?.features)
+                roomContainsFeature(featureId, reservation?.features)
                   ? 'text-success'
                   : 'text-danger'
               "
@@ -40,47 +44,46 @@
             <span>{{ featuresTranslationMap[featureId]?.label }}</span>
           </span>
         </p>
-        <hr class="reservation-line" />
-        <p *ngIf="authService.isLoggedIn()">
-          <span class="d-inline-block col-7">
-            <span class="d-block" ngForm #reservationForm="ngForm">
-              <span class="lead me-2">Termin:</span>
-              <p-calendar
-                name="reservation-dates"
-                dateFormat="DD, d MM yy"
-                required
-                [showIcon]="true"
-                [readonlyInput]="true"
-                [(ngModel)]="dates"
-                [firstDayOfWeek]="1"
-                [selectionMode]="'range'"
-                (ngModelChange)="onDateChange()"
-                [disabledDates]="reservedDates"
-                [minDate]="tomorrow"
-                [baseZIndex]="100"
-              ></p-calendar>
-            </span>
-          </span>
-          <span class="d-inline-block col-5">
-            <span class="lead me-2">Cena:</span>
-            <span class="lead">{{ reservationRequest?.price + " zł" }}</span>
-          </span>
-          <span class="d-inline-block col-6 mt-3">
-            <button type="submit" class="btn btn-primary" (click)="onReserve()">
-              Zarezerwuj
-            </button>
-          </span>
-        </p>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-12 my-4">
+      <div class="card border-warning mb-3">
+        <div class="card-header">Rezerwacja</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-6 w-auto">
+              <p-calendar
+                [inline]="true"
+                [selectionMode]="'range'"
+                [firstDayOfWeek]="1"
+                [ngModel]="reservationRange.length ? reservationRange : null"
+                [disabled]="true"
+              ></p-calendar>
+            </div>
+            <div class="col-12 col-md-6">
+              <p class="card-text pt-2 text-center">{{ reservation?.dateFrom | date:'fullDate' }} - {{ reservation?.dateTo | date:'fullDate' }}</p>
+              <p class="card-text pt-0 pt-md-2 text-center">Cena: {{ (reservation?.totalPrice | number:'1.2-2') + ' zł' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-12 col-lg-8 mb-4">
       <div class="card">
         <div class="col-12">
-          <p-carousel [value]="room?.opinions" [numVisible]="2" [numScroll]="1">
+          <p-carousel
+            [value]="reservation?.opinions"
+            [numVisible]="2"
+            [numScroll]="1"
+          >
             <ng-template pTemplate="header">
-              <h5>Opinie o {{ room?.hotelName }}</h5>
+              <h5>Opinie o {{ reservation?.hotelName }}</h5>
             </ng-template>
             <ng-template let-opinion pTemplate="item">
               <div class="card h-100 mx-2">
@@ -103,7 +106,7 @@
             </ng-template>
           </p-carousel>
         </div>
-        <div class="col-12" *ngIf="authService.isLoggedIn()">
+        <div class="col-12">
           <div class="mx-3">
             <textarea
               class="w-100"
@@ -130,19 +133,22 @@
         </div>
       </div>
     </div>
+
     <div class="col-6 col-lg-4">
       <div class="card border-warning mb-3">
         <div class="card-header">Hotel</div>
         <div class="card-body">
-          <h5 class="card-title">{{ room?.hotelName }}</h5>
+          <h5 class="card-title">{{ reservation?.hotelName }}</h5>
           <p class="card-text">
-            <small class="text-muted d-block">{{ room?.city }}</small>
-            <small class="text-muted">{{ room?.street }}</small>
+            <small class="text-muted d-block">{{ reservation?.city }}</small>
+            <small class="text-muted">{{ reservation?.street }}</small>
           </p>
           <hr />
           <p class="card-text">
-            <small class="text-muted d-block">{{ room?.phoneNumber }}</small>
-            <small class="text-muted">{{ room?.email }}</small>
+            <small class="text-muted d-block">{{
+              reservation?.phoneNumber
+            }}</small>
+            <small class="text-muted">{{ reservation?.email }}</small>
           </p>
         </div>
       </div>

@@ -1,0 +1,121 @@
+<div class="container mt-4">
+  <h3 class="mb-4">Aktywne</h3>
+  <div *ngIf="!(reservations | reservationStatus:'active').length">
+    <div class="card mb-3">
+      <div class="card-body">
+        <span class="card-title">Nie masz aktywnych rezerwacji</span>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let reservation of reservations | reservationStatus:'active'">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            class="ratio-4x3 img-thumbnail"
+            [src]="reservation?.attachment?.file"
+            alt="Room Photo"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title position-relative">
+              <span (click)="onRoomNameClick(reservation)" role="button">{{ reservation?.roomName }}</span>
+              <div class="position-absolute end-0 top-0">
+                <button
+                  class="btn btn-warning pe-auto"
+                  type="button"
+                  [disabled]="true"
+                  title="Nie możesz anulować aktywnej rezerwacji"
+                  (click)="onReservationCancel(reservation)"
+                >
+                  Anuluj rezerwację
+                </button>
+              </div>
+            </h5>
+            <p class="card-text pt-2">Od: {{ reservation?.dateFrom | date:'fullDate' }}</p>
+            <p class="card-text pt-0 pt-md-2">Do: {{ reservation?.dateTo | date:'fullDate' }}</p>
+            <p class="card-text pt-0 pt-md-2">Cena: {{ (reservation?.price | number:'1.2-2') + ' zł' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h3 class="mb-4">Przed Tobą</h3>
+  <div *ngIf="!(reservations | reservationStatus:'future').length">
+    <div class="card mb-3">
+      <div class="card-body">
+        <span class="card-title">Nie masz przyszłych rezerwacji</span>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let reservation of reservations | reservationStatus:'future'">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            class="ratio-4x3 img-thumbnail"
+            [src]="reservation?.attachment?.file"
+            alt="Room Photo"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title position-relative">
+              <span (click)="onRoomNameClick(reservation)" role="button">{{ reservation?.roomName }}</span>
+              <div class="position-absolute end-0 top-0">
+                <button
+                  class="btn btn-warning"
+                  type="button"
+                  (click)="onReservationCancel(reservation)"
+                >
+                  Anuluj rezerwację
+                </button>
+              </div>
+            </h5>
+            <p class="card-text pt-2">Od: {{ reservation?.dateFrom | date:'fullDate' }}</p>
+            <p class="card-text pt-0 pt-md-2">Do: {{ reservation?.dateTo | date:'fullDate' }}</p>
+            <p class="card-text pt-0 pt-md-2">Cena: {{ (reservation?.price | number:'1.2-2') + ' zł' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h3 class="mb-4">Historia</h3>
+  <div *ngIf="!(reservations | reservationStatus:'history').length">
+    <div class="card mb-3">
+      <div class="card-body">
+        <span class="card-title">Historia rezerwacji jest pusta</span>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let reservation of reservations | reservationStatus:'history'">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            class="ratio-4x3 img-thumbnail"
+            [src]="reservation?.attachment?.file"
+            alt="Room Photo"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              <span (click)="onRoomNameClick(reservation)" role="button">{{ reservation?.roomName }}</span>
+            </h5>
+            <p class="card-text pt-2">Od: {{ reservation?.dateFrom | date:'fullDate' }}</p>
+            <p class="card-text pt-0 pt-md-2">Do: {{ reservation?.dateTo | date:'fullDate' }}</p>
+            <p class="card-text pt-0 pt-md-2">Cena: {{ (reservation?.price | number:'1.2-2') + ' zł' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

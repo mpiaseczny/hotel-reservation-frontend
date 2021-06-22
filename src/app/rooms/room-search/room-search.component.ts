@@ -89,7 +89,7 @@ export class RoomSearchComponent implements OnInit {
       this.roomSearchForm.form.markAllAsTouched();
       this.messageService.add({
         severity: 'warn',
-        summary: 'Nie wpisano nazwy pokoju lub miasta',
+        summary: 'Nie wpisano nazwy hotelu lub miasta',
       });
       return;
     }
@@ -114,6 +114,6 @@ export class RoomSearchComponent implements OnInit {
   }
 
   onRoomNameClick(room: RoomListItem) {
-    this.router.navigate(['room-view', room?.id]);
+    this.router.navigate(['room', room?.id]);
   }
 }

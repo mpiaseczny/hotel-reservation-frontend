@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .p-carousel {
+    .p-carousel-header {
+      margin: 20px;
+    }
+  }
+
+  .p-calendar {
+    .p-datepicker-today > span,
+    span.p-disabled {
+      background: none;
+    }
+  }
+}

@@ -31,9 +31,11 @@
           <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
             <p-calendar
               name="date-from"
+              dateFormat="DD, d MM yy"
               [showIcon]="true"
               [readonlyInput]="true"
               [(ngModel)]="dateFrom"
+              [firstDayOfWeek]="1"
               (ngModelChange)="onDateFromChange($event)"
               placeholder="Od kiedy"
             ></p-calendar>
@@ -41,7 +43,9 @@
           <div class="col-md-4 col-sm-4 col-xs-6 col-pad-3 mb-3">
             <p-calendar
               name="date-to"
+              dateFormat="DD, d MM yy"
               [(ngModel)]="dateTo"
+              [firstDayOfWeek]="1"
               (ngModelChange)="onDateToChange($event)"
               [showIcon]="true"
               [readonlyInput]="true"
@@ -70,7 +74,7 @@
   </div>
 </section>
 
-<section id="freq-questions" class="p-5">
+<section class="p-5">
   <div class="container">
     <h2 class="text-center mb-4">Najczęściej zadawane pytania</h2>
     <div class="accordion accordion-flush" id="questions">

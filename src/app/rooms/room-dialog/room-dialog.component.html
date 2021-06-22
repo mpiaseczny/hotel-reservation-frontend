@@ -1,6 +1,6 @@
 <form class="row g-3" ngForm #form="ngForm">
   <div class="col-12">
-    <label for="inputName" class="form-label">Nazwa pokoju</label>
+    <label for="inputName" class="form-label">Nazwa pokoju*</label>
     <input
       required
       type="text"
@@ -12,14 +12,16 @@
     />
   </div>
   <div class="col-12">
-    <label for="inputDescription" class="form-label d-block">Opis</label>
+    <label for="inputDescription" class="form-label d-block">Opis*</label>
     <textarea required id="inputDescription" class="d-block w-100" [maxLength]="250" [rows]="2" pInputTextarea name="description" autoResize="autoResize" [(ngModel)]="roomRequest.description"></textarea>
   </div>
   <div class="col-md-6">
-    <label for="inputPrice" class="form-label">Cena</label>
+    <label for="inputPrice" class="form-label">Cena*</label>
     <input
       required
       type="number"
+      min="0"
+      step="0.01"
       class="form-control"
       id="inputPrice"
       name="price"
@@ -28,16 +30,14 @@
     />
   </div>
   <div class="col-md-6">
-    <label for="inputCapacity" class="form-label">Liczba miejsc</label>
-    <input
-      required
-      type="number"
-      class="form-control"
+    <label for="inputCapacity" class="form-label">Liczba miejsc*</label>
+    <p-dropdown
       id="inputCapacity"
-      name="capacity"
-      placeholder="2"
+      name="people"
+      [autoDisplayFirst]="false"
+      [options]="roomSizeOptions"
       [(ngModel)]="roomRequest.capacity"
-    />
+    ></p-dropdown>
   </div>
   <div class="col-12">
     <label class="form-label">Udogodnienia</label>
@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="col-12">
-    <span>Załączniki (do 2 MB każdy)</span>
+    <span>Załączniki (do 2 MB każdy)*</span>
     <p-fileUpload
       name="files"
       [multiple]="true"

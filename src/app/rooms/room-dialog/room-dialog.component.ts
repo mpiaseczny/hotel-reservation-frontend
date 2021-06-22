@@ -23,6 +23,7 @@ export class RoomDialogComponent {
 
   allFeatures: FeatureType[];
   featuresTranslationMap;
+  roomSizeOptions;
 
   @ViewChild('form')
   form: NgForm;

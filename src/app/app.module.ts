@@ -35,6 +35,10 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {CheckboxModule} from 'primeng/checkbox';
 import { RoomViewComponent } from './rooms/room-view/room-view.component';
 import {CarouselModule} from 'primeng/carousel';
+import { ReservationListComponent } from './reservations/reservation-list/reservation-list.component';
+import { ReservationViewComponent } from './reservations/reservation-view/reservation-view.component';
+import { ReservationStatusPipe } from './reservations/reservation-status.pipe';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -48,31 +52,35 @@ import {CarouselModule} from 'primeng/carousel';
     AddNewHotelComponent,
     RoomDialogComponent,
     RoomViewComponent,
+    ReservationListComponent,
+    ReservationViewComponent,
+    ReservationStatusPipe,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        NgxWebstorageModule.forRoot(),
-        NgxBootstrapIconsModule.pick(allIcons),
-        CommonModule,
-        CardModule,
-        FormsModule,
-        InputTextModule,
-        ButtonModule,
-        HttpClientModule,
-        ToastModule,
-        PasswordModule,
-        CalendarModule,
-        DropdownModule,
-        DynamicDialogModule,
-        FileUploadModule,
-        RatingModule,
-        ConfirmDialogModule,
-        InputTextareaModule,
-        CheckboxModule,
-        CarouselModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    NgxWebstorageModule.forRoot(),
+    NgxBootstrapIconsModule.pick(allIcons),
+    CommonModule,
+    CardModule,
+    FormsModule,
+    InputTextModule,
+    ButtonModule,
+    HttpClientModule,
+    ToastModule,
+    PasswordModule,
+    CalendarModule,
+    DropdownModule,
+    DynamicDialogModule,
+    FileUploadModule,
+    RatingModule,
+    ConfirmDialogModule,
+    InputTextareaModule,
+    CheckboxModule,
+    CarouselModule,
+    TooltipModule
+  ],
   providers: [
     MessageService,
     ConfirmationService,

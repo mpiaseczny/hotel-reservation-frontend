@@ -1,6 +1,6 @@
 <form class="row g-3" ngForm #form="ngForm">
   <div class="col-md-8">
-    <label for="inputName" class="form-label">Nazwa hotelu</label>
+    <label for="inputName" class="form-label">Nazwa hotelu*</label>
     <input
       required
       type="text"
@@ -12,7 +12,7 @@
     />
   </div>
   <div class="col-md-4">
-    <label class="form-label">Rating</label>
+    <label class="form-label">Rating*</label>
     <p-rating
       required
       name="rating"
@@ -21,7 +21,7 @@
     ></p-rating>
   </div>
   <div class="col-md-6">
-    <label for="inputCity" class="form-label">Miasto</label>
+    <label for="inputCity" class="form-label">Miasto*</label>
     <input
       required
       type="text"
@@ -33,7 +33,7 @@
     />
   </div>
   <div class="col-md-6">
-    <label for="inputStreet" class="form-label">Ulica</label>
+    <label for="inputStreet" class="form-label">Ulica*</label>
     <input
       required
       type="text"
@@ -45,7 +45,7 @@
     />
   </div>
   <div class="col-md-6">
-    <label for="inputPhone" class="form-label">Numer telefonu</label>
+    <label for="inputPhone" class="form-label">Numer telefonu*</label>
     <input
       required
       type="text"
@@ -57,7 +57,7 @@
     />
   </div>
   <div class="col-md-6">
-    <label for="inputEmail" class="form-label">Email</label>
+    <label for="inputEmail" class="form-label">Email*</label>
     <input
       required
       type="email"
@@ -69,7 +69,7 @@
     />
   </div>
   <div class="col-12">
-    <span>Załącznik (do 2 MB)</span>
+    <span>Załącznik (do 2 MB)*</span>
     <p-fileUpload
       name="files"
       [showCancelButton]="false"
