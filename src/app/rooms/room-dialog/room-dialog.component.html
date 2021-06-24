@@ -30,8 +30,9 @@
     />
   </div>
   <div class="col-md-6">
-    <label for="inputCapacity" class="form-label">Liczba miejsc*</label>
+    <label for="inputCapacity" class="form-label d-block">Liczba miejsc*</label>
     <p-dropdown
+      class="people-count-dropdown"
       id="inputCapacity"
       name="people"
       [autoDisplayFirst]="false"
@@ -70,8 +71,13 @@
     </p-fileUpload>
   </div>
   <div class="col-12 mt-3">
-    <button type="submit" class="btn btn-primary" (click)="onSave()">
+    <button *ngIf="!savedClicked; else spinner" type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="savedClicked">
       Zapisz
     </button>
+    <ng-template #spinner>
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </ng-template>
   </div>
 </form>

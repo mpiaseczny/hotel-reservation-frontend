@@ -89,8 +89,13 @@
     </p-fileUpload>
   </div>
   <div class="col-12 mt-3">
-    <button type="submit" class="btn btn-primary" (click)="onSave()">
+    <button *ngIf="!savedClicked; else spinner" type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="savedClicked">
       Zapisz
     </button>
+    <ng-template #spinner>
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </ng-template>
   </div>
 </form>

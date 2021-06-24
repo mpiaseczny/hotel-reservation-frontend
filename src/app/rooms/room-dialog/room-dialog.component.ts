@@ -2,8 +2,9 @@ import {Component, ViewChild} from '@angular/core';
 import {RoomRequest} from '../../shared/model/room-request';
 import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {NgForm} from '@angular/forms';
-import {MessageService} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {allFeatures, featuresTranslationMap, FeatureType} from '../../shared/model/feature.type';
+import {RoomService} from '../../shared/room.service';
 
 @Component({
   selector: 'app-room-dialog',
@@ -23,15 +24,23 @@ export class RoomDialogComponent {
 
   allFeatures: FeatureType[];
   featuresTranslationMap;
-  roomSizeOptions;
+  roomSizeOptions: SelectItem[] = [
+    { label: '1', value: 1 },
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+    { label: '5', value: 5 },
+  ];
 
   @ViewChild('form')
   form: NgForm;
+  savedClicked: boolean = false;
 
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private roomService: RoomService
   ) {
     this.allFeatures = allFeatures;
     this.featuresTranslationMap = featuresTranslationMap;
@@ -50,8 +59,16 @@ export class RoomDialogComponent {
       });
       return;
     }
+    this.savedClicked = true;
 
-    this.ref.close(this.roomRequest);
+    this.roomService.addRoom(this.roomRequest).subscribe(
+      () => {
+        this.ref.close(true);
+      },
+      () => {
+        this.ref.close(false);
+      }
+    );
   }
 
   onFileAdd($event: any) {
@@ -63,6 +80,7 @@ export class RoomDialogComponent {
           name: file.name,
           file: fileReader.result,
         });
+        console.log(file.name + ' ready');
       };
       fileReader.readAsDataURL(file);
     });

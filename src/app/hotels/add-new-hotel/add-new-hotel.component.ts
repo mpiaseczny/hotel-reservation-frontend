@@ -3,6 +3,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HotelDto } from '../../shared/model/hotel-dto';
 import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import {HotelService} from '../../shared/hotel.service';
+import {AddNewHotelInterface} from '../hotel-search/hotel-search.component';
 
 @Component({
   selector: 'app-add-new-hotel',
@@ -19,18 +21,22 @@ export class AddNewHotelComponent implements OnInit {
     email: null,
     attachment: null,
   };
+  editment: boolean = false;
 
   @ViewChild('form')
   form: NgForm;
+  savedClicked: boolean = false;
 
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private hotelService: HotelService
   ) {}
 
   ngOnInit() {
     const editedHotel = this.config?.data?.hotel;
+    this.editment = !!editedHotel;
     if (editedHotel) {
       this.hotelDto = { ...editedHotel };
     }
@@ -45,6 +51,7 @@ export class AddNewHotelComponent implements OnInit {
         name: file.name,
         file: fileReader.result,
       };
+      console.log(file.name + ' ready');
     };
     fileReader.readAsDataURL(file);
   }
@@ -58,7 +65,42 @@ export class AddNewHotelComponent implements OnInit {
       });
       return;
     }
+    this.savedClicked = true;
 
-    this.ref.close(this.hotelDto);
+    if (this.editment) {
+      this.hotelService.updateHotel(this.hotelDto.id, this.hotelDto).subscribe(
+        (updatedHotel) => {
+          const info: AddNewHotelInterface = {
+            success: true,
+            updatedHotel
+          };
+          this.ref.close(info);
+        },
+        () => {
+          const info: AddNewHotelInterface = {
+            success: false,
+            updatedHotel: {}
+          };
+          this.ref.close(info);
+        }
+      );
+    } else {
+      this.hotelService.addHotel(this.hotelDto).subscribe(
+        () => {
+          const info: AddNewHotelInterface = {
+            success: true,
+            updatedHotel: null
+          };
+          this.ref.close(info);
+        },
+        () => {
+          const info: AddNewHotelInterface = {
+            success: false,
+            updatedHotel: null
+          };
+          this.ref.close(info);
+        }
+      );
+    }
   }
 }

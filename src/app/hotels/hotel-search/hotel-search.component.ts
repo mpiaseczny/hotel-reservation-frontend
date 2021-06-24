@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelDto } from '../../shared/model/hotel-dto';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HotelService } from '../../shared/hotel.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AddNewHotelComponent } from '../add-new-hotel/add-new-hotel.component';
-import {RoomDialogComponent} from '../../rooms/room-dialog/room-dialog.component';
-import {RoomRequest} from '../../shared/model/room-request';
-import {RoomService} from '../../shared/room.service';
+import { RoomDialogComponent } from '../../rooms/room-dialog/room-dialog.component';
+import { RoomRequest } from '../../shared/model/room-request';
+import { RoomService } from '../../shared/room.service';
 
 @Component({
   selector: 'app-hotel-search',
@@ -62,22 +62,17 @@ export class HotelSearchComponent implements OnInit {
       baseZIndex: 100,
     });
 
-    ref.onClose.subscribe((hotelDto: HotelDto) => {
-      if (hotelDto) {
-        this.hotelService.addHotel(hotelDto).subscribe(
-          () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Dodano nowy hotel',
-            });
-          },
-          () => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Błąd podczas dodawania hotelu',
-            });
-          }
-        );
+    ref.onClose.subscribe((info: AddNewHotelInterface) => {
+      if (info.success) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Pomyślnie dodano nowy hotel',
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd przy dodawaniu hotelu',
+        });
       }
     });
   }
@@ -90,22 +85,17 @@ export class HotelSearchComponent implements OnInit {
       data: { hotel },
     });
 
-    ref.onClose.subscribe((hotelDto: HotelDto) => {
-      if (hotelDto) {
-        this.hotelService.updateHotel(hotel.id, hotelDto).subscribe(
-          (updatedHotel) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Zaktualizowano hotel ' + updatedHotel.name,
-            });
-          },
-          () => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Błąd przy aktualizacji hotelu',
-            });
-          }
-        );
+    ref.onClose.subscribe((info: AddNewHotelInterface) => {
+      if (info.success) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Zaktualizowano hotel ' + info?.updatedHotel?.name,
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd przy aktualizacji hotelu',
+        });
       }
     });
   }
@@ -134,22 +124,17 @@ export class HotelSearchComponent implements OnInit {
       data: { hotelId },
     });
 
-    ref.onClose.subscribe((roomRequest: RoomRequest) => {
-      if (roomRequest) {
-        this.roomService.addRoom(roomRequest).subscribe(
-          () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Pomyślnie dodano pokój',
-            });
-          },
-          () => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Błąd przy dodawaniu pokoju',
-            });
-          }
-        );
+    ref.onClose.subscribe((success: boolean) => {
+      if (success) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Pomyślnie dodano pokój',
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Błąd przy dodawaniu pokoju',
+        });
       }
     });
   }
@@ -157,8 +142,13 @@ export class HotelSearchComponent implements OnInit {
   onHotelNameClick(name: string) {
     this.router.navigate(['room-search'], {
       queryParams: {
-        hotelNameOrCity: name
+        hotelNameOrCity: name,
       },
     });
   }
+}
+
+export interface AddNewHotelInterface {
+  success?: boolean;
+  updatedHotel?: HotelDto;
 }
